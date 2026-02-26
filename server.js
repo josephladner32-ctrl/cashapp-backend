@@ -34,14 +34,14 @@ app.post('/login', async (req,res)=>{
 function auth(req,res,next){
   const token = req.headers['authorization']?.split(' ')[1];
   if(!token) return res.json({success:false,message:"Unauthorized"});
-  try { req.user = jwt.verify(token,SECRET); next(); } 
+  try { req.user = jwt.verify(token,SECRET); next(); }
   catch(e){ return res.json({success:false,message:"Invalid token"}); }
 }
 
 app.get('/dashboard', auth, (req,res)=>{
   const user = users.find(u=>u.email===req.user.email);
   if(!user) return res.json({success:false,message:"User not found"});
-  res.json({success:true, username:user.username, balance:user.balance, transactions:user.transactions});
+  res.json({success:true,username:user.username,balance:user.balance,transactions:user.transactions});
 });
 
 app.post('/add', auth, (req,res)=>{
