@@ -34,7 +34,7 @@ app.post('/login', async (req,res)=>{
 function auth(req,res,next){
   const token = req.headers['authorization']?.split(' ')[1];
   if(!token) return res.json({success:false,message:"Unauthorized"});
-  try { req.user = jwt.verify(token,SECRET); next(); }
+  try { req.user = jwt.verify(token,SECRET); next(); } 
   catch(e){ return res.json({success:false,message:"Invalid token"}); }
 }
 
